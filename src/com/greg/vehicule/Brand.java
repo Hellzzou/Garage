@@ -12,7 +12,10 @@ public enum Brand {
         this.name = name;
         this.price = price;
     }
-    String getName(){ return this.name;}
+
+    String getName(){
+        return this.name;
+    }
 
     public Double getPrice() {
         return price;

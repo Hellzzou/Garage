@@ -2,11 +2,11 @@ package com.greg.motor;
 import java.io.Serializable;
 
 public class Motor implements Serializable {
-    protected MotorType type;
+    MotorType type;
     protected String name;
     protected Double price;
 
-    public Motor(String name) {
+    Motor(String name) {
         this.name = name;
     }
     public String toString(){

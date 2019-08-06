@@ -28,7 +28,7 @@ public class Vehicule implements Serializable {
     public String toString() {
         StringBuilder option = new StringBuilder(" [");
         for (Option opt : this.getOptionsList()) {
-            option.append(opt.getName() + " (" + opt.getPrice() + "€),");
+            option.append(opt.getName()).append(" (").append(opt.getPrice()).append("€),");
         }
         if ( option.length() > 2) option.deleteCharAt(option.length()-1);
         else option.append("sans option]");
@@ -40,11 +40,11 @@ public class Vehicule implements Serializable {
     public Double getPrice() {
         return this.price;
     }
-    public Brand getBrand() {
+    private Brand getBrand() {
         return this.brand;
     }
 
-    public List<Option> getOptionsList() {
+    private List<Option> getOptionsList() {
         return this.optionsList;
     }
     //---------------------SETTERS--------------------------
