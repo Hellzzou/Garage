@@ -3,12 +3,16 @@ import com.greg.vehicule.Vehicule;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Scanner;
+
 class Garage implements Serializable {
     private static List<Vehicule>  vehiculeList = new ArrayList<>();
 
     Garage() {
         ObjectInputStream ois = null;
         File file = new File("garage.pages");
+
 
         if (file.length() > 0) {
             try {
@@ -32,8 +36,13 @@ class Garage implements Serializable {
         }
     }
 
-    static void addVehicule(Vehicule vehicule){
+    void addVehicule(Vehicule vehicule){
+        if (vehiculeList.size() > 0) vehicule.setId((vehiculeList.get(vehiculeList.size() - 1).getId()) + 1);
+        else vehicule.setId(1);
         vehiculeList.add(vehicule);
+        saveGarage();
+    }
+    private static void saveGarage(){
         ObjectOutputStream oos = null;
 
         try {
@@ -42,7 +51,7 @@ class Garage implements Serializable {
                             new FileOutputStream(
                                     new File("garage.pages"))));
 
-                oos.writeObject(vehiculeList);
+            oos.writeObject(vehiculeList);
         } catch (IOException e) {
             e.printStackTrace();
         }finally {
@@ -59,9 +68,36 @@ class Garage implements Serializable {
         StringBuilder str = new StringBuilder("***************************\n*  Garage OpenClassrooms  *\n***************************\n");
 
         if ( vehiculeList.size() > 0 )
-            for (Vehicule v : vehiculeList) str.append(v.toString());
+            for (Vehicule v : vehiculeList) str.append(v.getId()).append(" ").append(v.toString());
+
         else str.append("Le garage est vide");
         return str.toString();
+        }
+
+        void deleteVehicule(){
+            char a;
+            boolean found = false;
+            do {
+                System.out.println("\nVoulez- vous supprimer une voiture du garage ? ( O/N )");
+                Scanner sc = new Scanner(System.in);
+                a = sc.nextLine().charAt(0);
+
+                if (a == 'O') {
+                    ListIterator<Vehicule> it = vehiculeList.listIterator();
+                    System.out.println(this);
+                    System.out.println("Entrez le numéro de la voiture que vous voulez supprimer");
+                    int choice = sc.nextInt();
+                    while (it.hasNext()){
+                        Vehicule v = it.next();
+                        if (choice == v.getId()) {
+                            it.remove();
+                            found = true;
+                        }
+                    }
+                }if (!found && a == 'O') System.out.println("Vous n'avez pas choisi parmi les vehicules du garage !");
+            }while ( a == 'O');
+            System.out.println(this);
+            saveGarage();
         }
 
 }

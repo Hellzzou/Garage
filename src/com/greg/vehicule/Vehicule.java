@@ -13,6 +13,7 @@ public class Vehicule implements Serializable {
     private List<Option> optionsList;
     Brand brand;
     private Motor motor;
+    private int id;
 
     Vehicule() {
         this.price = 0.0;
@@ -47,6 +48,10 @@ public class Vehicule implements Serializable {
     private List<Option> getOptionsList() {
         return this.optionsList;
     }
+
+    public int getId() {
+        return id;
+    }
     //---------------------SETTERS--------------------------
 
     public void setMotor(Motor motor) {
@@ -56,5 +61,9 @@ public class Vehicule implements Serializable {
 
     public void setPrice(Double price) {
         this.price = this.price + price;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
